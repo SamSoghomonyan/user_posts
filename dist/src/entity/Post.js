@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn, } from 'typeorm';
+import { User } from './index.js';
 let UserPosts = class UserPosts {
     id;
     post;
@@ -17,7 +18,6 @@ let UserPosts = class UserPosts {
     updatedAt;
     isLiked;
     likedCount;
-    // Corrected: Directly pass the string literal 'User'
     user;
     userId;
 };
@@ -54,8 +54,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UserPosts.prototype, "likedCount", void 0);
 __decorate([
-    ManyToOne('User', (user) => user.posts) // <--- This will be the change
-    ,
+    ManyToOne(() => User, (user) => user.posts),
     JoinColumn({ name: 'userId' }),
     __metadata("design:type", Function)
 ], UserPosts.prototype, "user", void 0);

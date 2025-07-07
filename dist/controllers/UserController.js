@@ -17,16 +17,17 @@ import * as bcrypt from "bcrypt";
 let UserController = class UserController {
     userRepo = AppDataSource.getRepository(User);
     async me(user) {
+        console.log('🔍 CurrentUser:', user); // ✅ Logs the actual user object
         return this.userRepo.findOne({
             where: { id: user.id },
             relations: [
                 'posts',
-                'posts.comments',
-                'receivedRequests',
-                'receivedRequests.sender',
-                'sentRequests',
-                'sentRequests.receiver',
-                'receivedRequests.receiver',
+                // 'posts.comments',
+                // 'receivedRequests',
+                // 'receivedRequests.sender',
+                // 'sentRequests',
+                // 'sentRequests.receiver',
+                // 'receivedRequests.receiver',
             ],
         });
     }

@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, } from 'typeorm';
+import { UserPosts } from './index.js';
 let User = class User {
     id;
     email;
@@ -15,7 +16,6 @@ let User = class User {
     password;
     createdAt;
     updatedAt;
-    // CORRECTED LINE: Remove the arrow function wrapper
     posts;
 };
 __decorate([
@@ -43,8 +43,7 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
 __decorate([
-    OneToMany('UserPosts', (post) => post.user) // <--- THIS IS THE CHANGE
-    ,
+    OneToMany(() => UserPosts, (post) => post.user),
     __metadata("design:type", Array)
 ], User.prototype, "posts", void 0);
 User = __decorate([

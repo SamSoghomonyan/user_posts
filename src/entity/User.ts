@@ -6,7 +6,8 @@ import {
     UpdateDateColumn,
     OneToMany,
 } from 'typeorm';
-import type { UserPosts } from './Post.js'; // Keep this as 'import type' for type safety
+import type  { UserPosts  as IUserPosts} from './index.js';
+import  { UserPosts } from './index.js';
 
 @Entity()
 export class User {
@@ -28,7 +29,6 @@ export class User {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    // CORRECTED LINE: Remove the arrow function wrapper
-    @OneToMany('UserPosts', (post: UserPosts) => post.user) // <--- THIS IS THE CHANGE
-    posts: UserPosts[];
+    @OneToMany( ()=> UserPosts, (post: UserPosts) => post.user)
+    posts: IUserPosts[];
 }

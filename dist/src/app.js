@@ -2,6 +2,7 @@ import { createExpressServer } from 'routing-controllers';
 import { AuthController } from "../controllers/AuthController.js";
 import { UserController } from "../controllers/UserController.js";
 import { PostController } from "../controllers/PostController.js";
+// import { FriendRequestController } from "../controllers/FriendRequestController.js";
 import { AppDataSource } from "./data-source.js";
 import { User } from "./entity/User.js";
 import * as jwt from 'jsonwebtoken';

@@ -37,6 +37,7 @@ describe('Users API with auth', () => {
     });
     token2 = loginRes2.body.token;
     const decoded: any = jwt.verify(token, 'my_secret_key');
+    const token1 = decoded.body.token
     userId = decoded.id;
   });
 

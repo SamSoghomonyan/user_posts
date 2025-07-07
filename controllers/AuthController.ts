@@ -5,7 +5,7 @@ import {
   HttpError,
   BadRequestError,
   HttpCode
-} from 'routing-controllers';
+}  from 'routing-controllers';
 import { AppDataSource } from "../src/data-source.js";
 import { User } from "../src/entity/User.js";
 import * as bcrypt from 'bcrypt';

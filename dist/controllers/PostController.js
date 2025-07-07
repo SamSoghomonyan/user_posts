@@ -18,7 +18,7 @@ let PostController = class PostController {
     postRepo = AppDataSource.getRepository(UserPosts);
     async allPosts(limit, page) {
         return await this.postRepo.find({
-            relations: ['user', 'comments', 'comments.user'],
+            relations: ['user'],
             skip: (page - 1) * limit,
             take: limit,
         });
@@ -36,7 +36,7 @@ let PostController = class PostController {
         const savedPost = await this.postRepo.save(post);
         const fullPost = await this.postRepo.findOne({
             where: { id: savedPost.id },
-            relations: ['comments', 'comments.user', 'user'],
+            relations: ['user'],
         });
         return fullPost;
     }

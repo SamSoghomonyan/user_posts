@@ -8,8 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import type { User } from './User.js'; // Keep 'import type' for type safety
-
+import type  { User as IUser } from './index.js';
+import  { User } from './index.js';
 @Entity()
 export class UserPosts {
   @PrimaryGeneratedColumn('uuid')
@@ -36,10 +36,9 @@ export class UserPosts {
   @Column({ default: 0 })
   likedCount: number;
 
-  // Corrected: Directly pass the string literal 'User'
-  @ManyToOne('User', (user: User) => user.posts) // <--- This will be the change
+  @ManyToOne(() =>  User, (user: User) => user.posts)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user: IUser;
 
   @Column({ nullable: true })
   userId: string;
