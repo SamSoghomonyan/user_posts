@@ -1,0 +1,22 @@
+{
+   "compilerOptions": {
+      "lib": ["es2023"],
+      "target": "es2022",
+
+      "strict": false,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+
+      "module": "ESNext",
+      "moduleResolution": "Bundler",
+      "isolatedModules": true,
+      "downlevelIteration": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "outDir": "./dist",
+      "rootDir": "./",
+      "sourceMap": true
+   },
+   "include": ["src", "sst-env.d.ts","tests"]
+}
