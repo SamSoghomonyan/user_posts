@@ -10,12 +10,10 @@
 //     },
 // };
 
-// jest.config.js
 export default {
     testEnvironment: 'node',
-    testMatch: ['<rootDir>/dist/tests/**/*.js'],
-    transform: {}, // No transform for JS
+    testMatch:['**/*.test.js'],
     moduleNameMapper: {
-        '^(\\.{1,2}/.*)\\.js$': '$1', // Fix .js path issues
+        '^(\\.{1,2}/.*)\\.js$': '$1', // fix for relative imports
     },
 };

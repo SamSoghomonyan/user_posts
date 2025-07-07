@@ -4,11 +4,13 @@
    "description": "Awesome project developed with TypeORM.",
    "type": "module",
    "devDependencies": {
+      "@babel/core": "^7.28.0",
       "@babel/preset-env": "^7.28.0",
       "@babel/preset-typescript": "^7.27.1",
       "@types/jest": "^30.0.0",
       "@types/jsonwebtoken": "^9.0.10",
       "@types/node": "^22.13.10",
+      "babel-jest": "^30.0.4",
       "jest": "^30.0.4",
       "ts-jest": "^29.4.0",
       "ts-node": "^10.9.2",
@@ -28,7 +30,7 @@
       "build": "tsc",
       "start": "node dist/src/index.js",
       "typeorm": "typeorm-ts-node-commonjs",
-      "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+      "test": "jest",
       "test:coverage": "jest --coverage"
    }
 }
