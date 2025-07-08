@@ -13,9 +13,11 @@ import {
   HttpError,
   HttpCode
 } from "routing-controllers";
+import { OpenAPI } from "routing-controllers-openapi";
 import { AppDataSource } from "../src/data-source.js";
 import { User } from "../src/entity/User.js";
 import { UserPosts } from "../src/entity/Post.js";
+import {CreatePost} from "../DTO/CreatePost.js";
 
 @JsonController('/posts')
 export class PostController {
@@ -23,6 +25,9 @@ export class PostController {
   private postRepo = AppDataSource.getRepository(UserPosts);
 
   @Get('/')
+  @OpenAPI({
+    summary: 'Get all posts',
+  })
   async allPosts(
     @QueryParam("limit") limit: number,
     @QueryParam("page") page: number
@@ -35,20 +40,23 @@ export class PostController {
   }
 
   @Post('/')
+  @OpenAPI({
+    summary: 'create post',
+  })
   @HttpCode(201)
   async createPost(
     @CurrentUser() user: User,
-    @Body() body: { post: string }
+    @Body() body: CreatePost
   ) {
     if (!user) throw new UnauthorizedError();
 
     if (!body.post?.trim()) {
-      throw new BadRequestError('Post content is required');
+      throw new BadRequestError('CreatePost.ts content is required');
     }
 
     const post = new UserPosts();
     post.post = body.post.trim();
-    post.imageUrl = null; // Since you're not uploading
+    post.imageUrl = null;
     post.user = user;
 
     const savedPost = await this.postRepo.save(post);
@@ -61,6 +69,7 @@ export class PostController {
   }
 
   @Delete('/:id')
+  @OpenAPI({ summary: 'delete post' })
   async deletePost(
     @Param('id') id: string,
     @CurrentUser() user: User
@@ -73,7 +82,7 @@ export class PostController {
     });
 
     if (!post) {
-      throw new BadRequestError('Post not found');
+      throw new BadRequestError('CreatePost.ts not found');
     }
 
     if (post.user.id !== user.id) {
@@ -85,9 +94,21 @@ export class PostController {
   }
 
   @Patch('/:id')
+  @OpenAPI({
+    summary: 'update post',
+    requestBody: {
+      content: {
+        'application/json': {
+          example: {
+            post: 'new post content',
+          }
+        }
+      }
+    }
+  })
   async updatePost(
     @Param('id') id: string,
-    @Body() body: { post?: string },
+    @Body() body: CreatePost,
     @CurrentUser() user: User
   ) {
     if (!user) throw new UnauthorizedError();
@@ -98,7 +119,7 @@ export class PostController {
     });
 
     if (!post) {
-      throw new BadRequestError('Post not found');
+      throw new BadRequestError('CreatePost.ts not found');
     }
 
     if (post.user.id !== user.id) {
@@ -110,6 +131,6 @@ export class PostController {
     }
 
     await this.postRepo.save(post);
-    return { message: 'Post updated successfully' };
+    return { message: 'CreatePost.ts updated successfully' };
   }
 }

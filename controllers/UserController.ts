@@ -14,24 +14,22 @@ import {
 import { AppDataSource } from "../src/data-source.js";
 import { User } from "../src/entity/User.js";
 import * as bcrypt from "bcrypt";
+import {OpenAPI} from "routing-controllers-openapi";
+import {CreateUser} from "../DTO/CreateUser.js";
 
 @JsonController('/users')
 export class UserController {
   private userRepo = AppDataSource.getRepository(User);
-
   @Get('/')
+  @OpenAPI({
+    summary: 'about user',
+  })
   async me(@CurrentUser() user: User) {
-    console.log('🔍 CurrentUser:', user); // ✅ Logs the actual user object
+    console.log('🔍 CurrentUser:', user);
     return this.userRepo.findOne({
       where: { id: user.id },
       relations: [
         'posts',
-        // 'posts.comments',
-        // 'receivedRequests',
-        // 'receivedRequests.sender',
-        // 'sentRequests',
-        // 'sentRequests.receiver',
-        // 'receivedRequests.receiver',
       ],
     });
 
@@ -40,7 +38,7 @@ export class UserController {
   @Patch('/:id')
   async update(
     @Param('id') id: string,
-    @Body() body: { username?: string; email?: string; password?: string },
+    @Body() body: CreateUser,
     @CurrentUser() user: User
   ) {
     if (user.id !== id) {

@@ -3,7 +3,7 @@ import { app } from '../src/app';
 import { AppDataSource } from '../src/data-source';
 import { UserPosts } from "../src/entity/Post";
 
-describe('Post', () => {
+describe('CreatePost.ts', () => {
   let token = '';
   let token2 = '';
   let createdPostID = '';
@@ -99,7 +99,7 @@ describe('Post', () => {
         post: 'Updated test post',
       });
     expect(post.status).toBe(200);
-    expect(post.body.message).toEqual('Post updated successfully' );
+    expect(post.body.message).toEqual('CreatePost.ts updated successfully' );
   });
   it('post not found', async () => {
     const post = await request(app)
@@ -132,24 +132,24 @@ describe('Post', () => {
         post: 'Updated test post',
       })
     expect(post.status).toBe(400);
-    expect(post.body.message).toEqual('Post not found' );
+    expect(post.body.message).toEqual('CreatePost.ts not found' );
   });
   it('post not found', async () => {
     const post = await request(app)
       .delete(`/posts/${createdPostID}`)
       .set('Authorization', `Bearer ${token}`)
     expect(post.status).toBe(400);
-    expect(post.body.message).toEqual('Post not found' );
+    expect(post.body.message).toEqual('CreatePost.ts not found' );
   });
   it('incorect token when deleted the post', async () => {
     const post = await request(app)
       .delete(`/posts/${createdPostID}`)
       .set('Authorization', `Bearer '343725465326svdgfshgd'`)
-    expect(post.status).toBe(400);
+    expect(post.status).toBe(401);
   });  it('incorect token when update the post', async () => {
     const post = await request(app)
       .patch(`/posts/${createdPostID}`)
       .set('Authorization', `Bearer '343725465326svdgfshgd'`)
-    expect(post.status).toBe(400);
+    expect(post.status).toBe(401);
   });
 });

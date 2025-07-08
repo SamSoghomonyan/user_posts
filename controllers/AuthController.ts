@@ -6,10 +6,14 @@ import {
   BadRequestError,
   HttpCode
 }  from 'routing-controllers';
+import { OpenAPI } from 'routing-controllers-openapi';
+
 import { AppDataSource } from "../src/data-source.js";
 import { User } from "../src/entity/User.js";
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { Signup } from "../DTO/Signup.js";
+import {Login} from "../DTO/Login.js";
 
 @JsonController('/auth')
 export class AuthController {
@@ -17,9 +21,11 @@ export class AuthController {
 
   @Post('/signup')
   @HttpCode(201)
+  @OpenAPI({
+    summary: 'sign up new user',
+  })
   async signup(
-    @Body() body: { email: string; username: string; password: string }
-  ) {
+    @Body() body: Signup) {
     const { email, username, password } = body;
 
     const existingUser = await this.userRepo.findOne({ where: { email } });
@@ -43,7 +49,10 @@ export class AuthController {
   }
 
   @Post('/login')
-  async login(@Body() body: { email: string; password: string}) {
+  @OpenAPI({
+    summary: 'login user' ,
+  })
+  async login(@Body() body: Login) {
     const { email, password } = body;
 
     const user = await this.userRepo.findOne({ where: { email } });
