@@ -85,8 +85,8 @@ describe('Auth Controller', () => {
         email: "email",
         password: password
       });
-      expect(user.status).toBe(401);
-      expect(user.body.message).toEqual('Invalid credentials');
+      expect(user.status).toBe(400);
+      expect(user.body.message).toEqual('Invalid body, check errors property for more info.');
     })
   });
 });
