@@ -2,15 +2,16 @@ import 'reflect-metadata';
 import express from 'express';
 import { createExpressServer, getMetadataArgsStorage } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
-import { validationMetadatasToSchemas } from 'class-validator-jsonschema'; // ✅ ADD THIS
+import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import swaggerUi from 'swagger-ui-express';
 import * as jwt from 'jsonwebtoken';
-import { multer } from 'multer'
 import { AuthController } from "../controllers/AuthController.js";
 import { UserController } from "../controllers/UserController.js";
 import { PostController } from "../controllers/PostController.js";
 import { AppDataSource } from "./data-source.js";
 import { User } from "./entity/User.js";
+import {Images} from "./entity/Images.js";
+import {ImagesController} from "../controllers/ImagesController.js";
 
 export const app = createExpressServer({
   validation: true,
@@ -19,6 +20,7 @@ export const app = createExpressServer({
     AuthController,
     UserController,
     PostController,
+    ImagesController,
   ],
   currentUserChecker: async (action) => {
     const authHeader = action.request.headers['authorization'];
@@ -44,6 +46,7 @@ const swaggerSpec = routingControllersToSpec(
         AuthController,
         UserController,
         PostController,
+          Images
       ],
     },
     {
