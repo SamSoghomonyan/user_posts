@@ -1,29 +1,34 @@
 import {
     JsonController,
-    Body,
-    Param,
-    Get,
-    Delete,
     Post,
-    QueryParam,
-    Patch,
-    CurrentUser,
-    UnauthorizedError,
-    BadRequestError,
-    HttpError,
-    HttpCode
-} from "routing-controllers";
-import { OpenAPI } from "routing-controllers-openapi";
+    HttpCode,
+    Body,
+    OnUndefined,
+    UploadedFile
+} from 'routing-controllers';
+import { OpenAPI } from 'routing-controllers-openapi';
+import {
+    SwaggerRoute,
+    SwRoute,
+} from '@open-template-hub/swagger-decorators';
 import {CreateImages} from "../DTO/CreateImages.js";
+const mySwaggerRoute = { name: 'MyRoute' } as SwaggerRoute;
+@SwRoute(mySwaggerRoute)
 
 @JsonController('/images')
 export class ImagesController {
     @Post('/')
-    @OpenAPI({
-        summary: 'create Images',
-    })
     @HttpCode(201)
-    async createPost(@Body() body: any) {
-        return { message: 'Post created'};
+    @OnUndefined(204)
+    @OpenAPI({
+        summary: 'Create an image with JSON',
+    })
+    async uploadImage(
+        @Body() body: CreateImages ,
+    @UploadedFile('image', { required: true }) image: Express.Multer.File
+    ) {
+        // console.log(body.name)
+        console.log(image)
+        return { message: 'Image processed' };
     }
 }
